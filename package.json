@@ -1,25 +1,22 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "portfolio-3d",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export": "next export"
+    "start": "next start"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.10",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.5.0",
-    "aos": "^2.3.4",
+    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^11.11.9",
-    "fullpage.js": "^4.0.30",
     "gsap": "^3.12.5",
     "lucide-react": "^0.453.0",
-    "next": "^13.0.0",
+    "next": "^14.2.15",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
@@ -29,13 +26,11 @@
     "three-stdlib": "^2.34.0"
   },
   "devDependencies": {
-    "@types/aos": "^3.0.7",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18",
     "@types/three": "^0.169.0",
-    "eslint": "^9.12.0",
-    "eslint-config-next": "^15.0.0-rc.0",
+    "autoprefixer": "^10.4.20",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.7.3"

@@ -1,31 +1,40 @@
-import { dataPortfolio } from "@/data";
-import AvatarPortfolio from "@/components/avatar-portfolio";
-import CircleImage from "@/components/circle-image";
-import TransitionPage from "@/components/transition-page";
-import ContainerPage from "@/components/container";
-import PortfolioBox from "@/components/portfolio-box";
+"use client";
 
-const PortfolioPage = () => {
+import { dataPortfolio } from "@/data";
+import PortfolioCard from "@/components/portfolio-card";
+import PageTransition from "@/components/page-transition";
+import { motion } from "framer-motion";
+
+export default function PortfolioPage() {
   return (
-    <ContainerPage>
-      <TransitionPage />
-      <AvatarPortfolio />
-      <CircleImage />
-      <div className="flex flex-col justify-center min-h-screen">
-        <h1 className="text-4xl md:text-5xl font-black text-center mb-4">
-          Mis últimos <span className="text-gradient-primary">trabajos</span>
-        </h1>
-        <p className="text-center text-white/60 mb-12 max-w-lg mx-auto">
-          Una selección de proyectos que demuestran mi pasión por el desarrollo y el diseño
-        </p>
-        <div className="relative z-10 grid max-w-6xl gap-6 mx-auto md:grid-cols-3 lg:grid-cols-4">
-          {dataPortfolio.map((data) => (
-            <PortfolioBox key={data.id} data={data} />
-          ))}
+    <>
+      <PageTransition />
+      <div className="relative z-10 min-h-screen pt-28 px-6 py-20">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h1 className="text-4xl md:text-6xl font-black mb-4">
+              Mis{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff1b00] to-[#4a2fbd]">
+                Proyectos
+              </span>
+            </h1>
+            <p className="text-white/50 text-lg max-w-md mx-auto">
+              Una selección de trabajos que demuestran mi pasión por el desarrollo
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {dataPortfolio.map((project, index) => (
+              <PortfolioCard key={project.id} data={project} index={index} />
+            ))}
+          </div>
         </div>
       </div>
-    </ContainerPage>
+    </>
   );
 }
-
-export default PortfolioPage;

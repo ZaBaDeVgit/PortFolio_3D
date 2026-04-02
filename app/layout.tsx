@@ -1,15 +1,17 @@
-import type { Metadata } from 'next';
-import { Urbanist } from 'next/font/google';
-import './globals.css';
-import Navbar from '@/components/navbar';
-import Header from '@/components/header';
-import CustomCursor from '@/components/custom-cursor';
+import type { Metadata } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/header";
+import Dock from "@/components/dock";
+import CustomCursor from "@/components/custom-cursor";
+import Scene3D from "@/components/scene-3d";
 
-const urbanist = Urbanist({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" });
 
 export const metadata: Metadata = {
-  title: 'ZaBaDev — Full Stack Developer & Formador',
-  description: 'Portfolio de ZaBaDeV — Desarrollador Full Stack y Formador Online. Si puedes imaginarlo, puedes programarlo.',
+  title: "ZaBaDeV — Full Stack Developer & Formador",
+  description: "Portfolio de ZaBaDeV. Si puedes imaginarlo, puedes programarlo.",
 };
 
 export default function RootLayout({
@@ -18,18 +20,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
-      <body className={`${urbanist.className} w-full min-h-screen overflow-x-hidden`}>
-        <div className="relative w-full min-h-screen">
-          <CustomCursor />
-          <Header />
-          {children}
-          <Navbar />
-          <div className="noise-overlay" />
-        </div>
+      <body className="font-sans antialiased bg-[#0a0a0a] text-white overflow-x-hidden">
+        <Scene3D />
+        <CustomCursor />
+        <Header />
+        <main className="relative z-10">{children}</main>
+        <Dock />
       </body>
     </html>
   );

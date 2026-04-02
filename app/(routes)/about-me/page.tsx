@@ -1,24 +1,17 @@
-import Avatar from "@/components/avatar";
-import ContainerPage from "@/components/container";
-import CounterSkills from "@/components/counter-skills";
-import TimeLine from "@/components/time-line";
-import TransitionPage from "@/components/transition-page";
+"use client";
 
-const PageAboutMe = () => {
+import PageTransition from "@/components/page-transition";
+import Timeline from "@/components/timeline";
+import CounterSection from "@/components/counter-section";
+
+export default function AboutPage() {
   return (
-    <div>
-      <TransitionPage />
-      <ContainerPage>
-        <Avatar />
-        <h1 className="text-4xl md:text-5xl font-black text-center md:text-left mb-8">
-          Toda mi{' '}
-          <span className="text-gradient-primary">trayectoria</span>
-        </h1>
-        <CounterSkills />
-        <TimeLine />
-      </ContainerPage>
-    </div>
+    <>
+      <PageTransition />
+      <div className="pt-28">
+        <CounterSection />
+        <Timeline />
+      </div>
+    </>
   );
 }
-
-export default PageAboutMe;

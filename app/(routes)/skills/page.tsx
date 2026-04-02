@@ -1,110 +1,46 @@
-'use client';
+"use client";
 
-import AvatarServices from "@/components/avatar-services";
-import CircleImage from "@/components/circle-image";
-import TransitionPage from "@/components/transition-page";
-import { useEffect, useRef } from 'react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { skillsData } from "@/data";
+import SkillBar from "@/components/skill-bar";
+import PageTransition from "@/components/page-transition";
+import { motion } from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const skills = [
-  { name: "Java SE", percentage: 80, color: "#F16529" },
-  { name: "Java EE", percentage: 70, color: "#2965F1" },
-  { name: "JavaScript", percentage: 90, color: "#F7DF1E" },
-  { name: "React", percentage: 85, color: "#61DAFB" },
-  { name: "Angular", percentage: 75, color: "#DD0031" },
-  { name: "Vite", percentage: 80, color: "#646CFF" },
-  { name: "Android", percentage: 70, color: "#3DDC84" },
-  { name: "SQL", percentage: 85, color: "#00758F" },
-  { name: "PHP", percentage: 65, color: "#777BB3" },
-  { name: "C#", percentage: 80, color: "#9B4F96" },
-  { name: "C++", percentage: 75, color: "#00599C" },
-  { name: "C", percentage: 90, color: "#A8B9CC" },
-  { name: "Next.js", percentage: 85, color: "#fff" },
-  { name: "TypeScript", percentage: 80, color: "#3178C6" },
-  { name: "Node.js", percentage: 75, color: "#339933" },
-  { name: "Python", percentage: 70, color: "#3776AB" },
-];
-
-const SkillsPage = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    const ctx = gsap.context(() => {
-      const bars = containerRef.current!.querySelectorAll('.skill-progress');
-      
-      gsap.fromTo(bars,
-        { width: "0%" },
-        {
-          width: (i) => {
-            const skill = skills[i];
-            return skill ? `${skill.percentage}%` : "0%";
-          },
-          duration: 1.5,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 70%",
-          },
-        }
-      );
-
-      const items = containerRef.current!.querySelectorAll('.skill-item');
-      gsap.fromTo(items,
-        { opacity: 0, x: -30 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          stagger: 0.05,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
+export default function SkillsPage() {
   return (
     <>
-      <TransitionPage />
-      <CircleImage />
-      <AvatarServices />
-      <div ref={containerRef} className="max-w-6xl mx-auto px-6 pt-32 pb-20">
-        <h1 className="text-4xl md:text-5xl font-black text-center mb-16">
-          Mis <span className="text-gradient-primary">Skills</span>
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {skills.map((skill) => (
-            <div key={skill.name} className="skill-item glass rounded-xl p-5">
-              <div className="flex justify-between items-center mb-3">
-                <span className="font-semibold text-white">{skill.name}</span>
-                <span className="text-sm font-bold text-[#ff1b00]">{skill.percentage}%</span>
-              </div>
-              <div className="skill-bar-container">
-                <div
-                  className="skill-progress"
-                  style={{
-                    background: `linear-gradient(90deg, ${skill.color}, ${skill.color}dd)`,
-                    boxShadow: `0 0 15px ${skill.color}40`,
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+      <PageTransition />
+      <div className="relative z-10 min-h-screen pt-28 px-6 py-20">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h1 className="text-4xl md:text-6xl font-black mb-4">
+              Mis{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff1b00] to-[#4a2fbd]">
+                Skills
+              </span>
+            </h1>
+            <p className="text-white/50 text-lg max-w-md mx-auto">
+              Tecnologías y herramientas que domino
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {skillsData.map((skill, index) => (
+              <SkillBar
+                key={skill.name}
+                name={skill.name}
+                percentage={skill.percentage}
+                color={skill.color}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
-};
-
-export default SkillsPage;
+}
