@@ -1,5 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react";
+import { useRef, useCallback } from "react";
 
 interface PortfolioBoxProps {
   data: {
@@ -11,41 +16,76 @@ interface PortfolioBoxProps {
   };
 }
 
-const PortfolioBox = (props: PortfolioBoxProps) => {
-  const { data } = props;
+const PortfolioBox = ({ data }: PortfolioBoxProps) => {
   const { title, image, urlGithub, urlDemo } = data;
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    cardRef.current.style.setProperty('--mouse-x', `${x}%`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}%`);
+  }, []);
 
   return (
-    <div className="p-4 border border-teal-50 rounded-xl">
-      <h3 className="mb-4 text-xl">{title}</h3>
-      <Image
-        src={image}
-        alt="Image product"
-        width={200}
-        height={200}
-        className="relative w-full md:w-[200px]"
-        rounded-2x
-        h-auto
-      />
-      <div className="flex gap-5 mt-5">
-        <Link
-          href={urlGithub}
-          target="_black"
-          className="p-2 transition 
-        duration-150 rounded-lg bg-slate-500 hover:bg-slate-500/80"
-        >
-          Github
-        </Link>
-        <Link
-          href={urlDemo}
-          target="_black"
-          className="p-2 transition 
-        duration-150 rounded-lg bg-secondary hover:bg-secondary/80"
-        >
-          Demo
-        </Link>
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="card-3d group"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      whileHover={{ y: -10 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <div className="relative overflow-hidden rounded-t-2xl">
+        <Image
+          src={image}
+          alt={title}
+          width={400}
+          height={300}
+          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Overlay actions */}
+        <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+          {urlGithub !== '#!' && (
+            <Link
+              href={urlGithub}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full glass hover:bg-white/20 transition-all"
+            >
+              <Github size={20} />
+            </Link>
+          )}
+          {urlDemo !== '#!' && (
+            <Link
+              href={urlDemo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full bg-[#ff1b00] hover:bg-[#ff1b00]/80 transition-all"
+            >
+              <ExternalLink size={20} />
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
+      
+      <div className="p-4 relative z-10">
+        <h3 className="text-lg font-bold text-white group-hover:text-[#ff1b00] transition-colors">
+          {title}
+        </h3>
+        <div className="mt-2 flex gap-2">
+          <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/60">
+            Project
+          </span>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 

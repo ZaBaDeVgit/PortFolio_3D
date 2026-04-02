@@ -1,5 +1,10 @@
 const nextConfig = {
-    output: 'export', // Genera archivos estáticos
+    output: 'export',
+    basePath: '/PortFolio_3D',
+    images: {
+        unoptimized: true,
+    },
+    trailingSlash: true,
 };
 
 module.exports = nextConfig;

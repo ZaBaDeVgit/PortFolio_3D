@@ -3,64 +3,96 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TypeAnimation } from "react-type-animation";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const Introduction = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.5 });
+      
+      tl.fromTo(imageRef.current,
+        { opacity: 0, scale: 0.5, rotate: -10 },
+        { opacity: 1, scale: 1, rotate: 0, duration: 1.2, ease: "back.out(1.7)" }
+      )
+      .fromTo('.reveal-item',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" },
+        "-=0.6"
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="z-auto w-full h-full bg-darkBg/60">
-      <div className="z-50 grid items-center h-full p-6 py-20 md:py-0 md:grid-cols-2">
-        <div className="flex pt-20 justify-center items-center">
-          <Image
-            src="/home-4.png"
-            priority
-            width="200"
-            height="200"
-            alt="Profile pic"
-            className="w-auto h-auto image-hover-opacity"
-          />
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden">
+      {/* Background glow orbs */}
+      <div className="glow-orb w-96 h-96 bg-[#ff1b00] top-20 -left-48" />
+      <div className="glow-orb w-80 h-80 bg-[#4a2fbd] bottom-20 right-0" />
+      
+      <div className="relative z-10 grid items-center h-full p-6 md:p-12 md:grid-cols-2 gap-8">
+        {/* Image side */}
+        <div ref={imageRef} className="flex justify-center items-center order-2 md:order-1">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ff1b00] to-[#4a2fbd] blur-2xl opacity-30 animate-pulse" />
+            <Image
+              src="/home-4.png"
+              priority
+              width="280"
+              height="280"
+              alt="Profile pic"
+              className="relative w-64 h-64 md:w-72 md:h-72 object-contain animate-float image-hover-lift"
+            />
+          </div>
         </div>
 
-        <div className="flex flex-col justify-center max-w-md">
-          <h1 className="pt-20mb-5 text-2xl leading-tight text-center md:text-left md:text-4xl md:mb-10">
-            Si puedes ImaginarlO,
+        {/* Text side */}
+        <div ref={textRef} className="flex flex-col justify-center order-1 md:order-2">
+          <h1 className="reveal-item text-3xl md:text-5xl font-black leading-tight mb-6">
+            <span className="text-gradient">Si puedes ImaginarlO,</span>
+            <br />
             <TypeAnimation
               sequence={[
                 "puedes programarlO",
-                1000,
+                1500,
                 "puedes optimizarlO",
-                1000,
+                1500,
                 "puedes implementarlO",
-                1000,
+                1500,
                 "puedes desarrollarlO",
-                1000,
+                1500,
               ]}
               wrapper="span"
               speed={50}
               repeat={Infinity}
-              className="block font-bold text-secondary"
+              className="block text-gradient-primary"
             />
           </h1>
 
-          <p className="mx-auto mb-2 text-xl md:mx-0 md:mb-8">
+          <p className="reveal-item text-lg md:text-xl text-white/80 mb-8 max-w-lg">
             Soy Formador Online y Desarrollador Full Stack, apasionado por
             combinar diseño y desarrollo para construir experiencias digitales
             intuitivas, accesibles y con un impacto duradero.
           </p>
 
-          <div className="flex items-center justify-center gap-3 md:justify-start md:gap-10">
-            <div className="flex items-center justify-center gap-3 md:justify-start md:gap-10">
-              <Link
-                href="/portfolio"
-                className="btn-5 px-10 py-4 text-md w-fit relative overflow-hidden cursor-pointer"
-              >
-                <span>Ver proyectos</span>
-              </Link>
-              <Link
-                href="/contact"
-                className="btn-5 px-10 py-4 text-md w-fit relative overflow-hidden cursor-pointer"
-              >
-                <span>Contacta conmigo</span>
-              </Link>
-            </div>
+          <div className="reveal-item flex flex-wrap items-center gap-4">
+            <Link
+              href="/portfolio/"
+              className="btn-glow"
+            >
+              <span>🚀 Ver proyectos</span>
+            </Link>
+            <Link
+              href="/contact/"
+              className="btn-outline"
+            >
+              <span>💬 Contacta conmigo</span>
+            </Link>
           </div>
         </div>
       </div>
