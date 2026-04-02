@@ -19,12 +19,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={urbanist.className}>
-        <CustomCursor />
-        <Header />
-        {children}
-        <Navbar />
-        <div className="noise-overlay" />
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </head>
+      <body className={`${urbanist.className} w-full min-h-screen overflow-x-hidden`}>
+        <div className="relative w-full min-h-screen">
+          <CustomCursor />
+          <Header />
+          {children}
+          <Navbar />
+          <div className="noise-overlay" />
+        </div>
       </body>
     </html>
   );
