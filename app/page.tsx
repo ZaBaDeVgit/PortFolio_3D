@@ -4,11 +4,11 @@ import TransitionPage from "@/components/transition-page";
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative w-full min-h-[100vh] min-h-[100dvh]">
       <TransitionPage />
-      <div className="flex min-h-[100vh] h-full bg-no-repeat bg-gradient-cover relative overflow-hidden">
+      <div className="relative w-full min-h-[100vh] min-h-[100dvh] overflow-hidden">
         <CoverParticles />
-        <div className="relative z-10 w-full">
+        <div className="relative z-10 w-full min-h-[100vh] min-h-[100dvh]">
           <Introduction />
         </div>
       </div>

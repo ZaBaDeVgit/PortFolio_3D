@@ -18,6 +18,8 @@ html, body {
   color: #fff;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
   overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
 }
 
 @media (pointer: coarse) {
@@ -28,6 +30,7 @@ html, body {
 
 main {
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+  width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
 }

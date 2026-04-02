@@ -28,13 +28,13 @@ const Navbar = () => {
 
   return (
     <motion.div 
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50"
+      className="fixed bottom-8 left-0 right-0 z-50 flex justify-center pointer-events-none"
     >
-      <nav className="glass-strong rounded-2xl px-2 py-2 shadow-2xl">
-        <div ref={navRef} className="flex items-center gap-1 relative">
+      <nav className="glass-strong rounded-2xl px-3 py-3 shadow-2xl pointer-events-auto">
+        <div ref={navRef} className="flex items-center gap-2 relative">
           <AnimatePresence>
             {indicatorStyle.width > 0 && (
               <motion.div

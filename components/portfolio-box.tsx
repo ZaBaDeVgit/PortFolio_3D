@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 import { useRef, useCallback } from "react";
+import BaseImage from "./base-image";
 
 interface PortfolioBoxProps {
   data: {
@@ -41,7 +41,7 @@ const PortfolioBox = ({ data }: PortfolioBoxProps) => {
       transition={{ type: "spring", stiffness: 300 }}
     >
       <div className="relative overflow-hidden rounded-t-2xl">
-        <Image
+        <BaseImage
           src={image}
           alt={title}
           width={400}

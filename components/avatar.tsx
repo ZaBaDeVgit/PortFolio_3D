@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import MotionTransition from "./transition-component";
+import BaseImage from "./base-image";
 
 const Avatar = () => {
     return (
         <MotionTransition position="bottom" className="bottom-0 right-0 hidden md:inline-block md:absolute">
-            <Image 
+            <BaseImage 
                 src="/avatar-1.png" 
                 width={350} 
                 height={350} 

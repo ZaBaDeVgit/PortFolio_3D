@@ -1,5 +1,5 @@
 import MotionTransition from "./transition-component";
-import Image from "next/image";
+import BaseImage from "./base-image";
 
 const AvatarServices = () => {
   return (
@@ -7,7 +7,7 @@ const AvatarServices = () => {
       position="right"
       className="bottom-0 hidden md:inline-block md:absolute"
     >
-      <Image
+      <BaseImage
         src="/services.png"
         width={400}
         height={300}

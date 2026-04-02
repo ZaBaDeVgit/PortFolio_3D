@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="es">
       <body className={urbanist.className}>
         <CustomCursor />
-        <Navbar />
         <Header />
         {children}
+        <Navbar />
         <div className="noise-overlay" />
       </body>
     </html>
