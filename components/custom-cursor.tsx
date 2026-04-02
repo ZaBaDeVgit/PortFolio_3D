@@ -5,28 +5,30 @@ import { useMousePosition } from "@/hooks/use-mouse-position";
 
 const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
-  const outlineRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
   const { x, y } = useMousePosition();
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
 
+  // Main dot follows instantly
   useEffect(() => {
     if (dotRef.current) {
-      dotRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      dotRef.current.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
     }
   }, [x, y]);
 
+  // Trail follows with delay
   useEffect(() => {
-    let outlineX = 0;
-    let outlineY = 0;
+    let trailX = 0;
+    let trailY = 0;
     let animationId: number;
 
     const animate = () => {
-      outlineX += (x - outlineX) * 0.12;
-      outlineY += (y - outlineY) * 0.12;
+      trailX += (x - trailX) * 0.08;
+      trailY += (y - trailY) * 0.08;
 
-      if (outlineRef.current) {
-        outlineRef.current.style.transform = `translate(${outlineX}px, ${outlineY}px)`;
+      if (trailRef.current) {
+        trailRef.current.style.transform = `translate(${trailX - 1}px, ${trailY - 1}px)`;
       }
 
       animationId = requestAnimationFrame(animate);
@@ -70,26 +72,33 @@ const CustomCursor = () => {
 
   return (
     <>
+      {/* Main dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#ff1b00] pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
-          transform: `translate(${x}px, ${y}px)`,
-          boxShadow: "0 0 10px #ff1b00, 0 0 20px #ff1b00",
-          transition: isClicking ? "transform 0.1s, width 0.2s, height 0.2s" : "transform 0.05s",
-          width: isClicking ? "6px" : "8px",
-          height: isClicking ? "6px" : "8px",
+          width: isHovering ? "10px" : isClicking ? "5px" : "6px",
+          height: isHovering ? "10px" : isClicking ? "5px" : "6px",
+          borderRadius: isHovering ? "2px" : "50%",
+          background: isHovering
+            ? "linear-gradient(135deg, #ff1b00, #fb4a02)"
+            : "#ff1b00",
+          boxShadow: isHovering
+            ? "0 0 15px rgba(255,27,0,0.8), 0 0 30px rgba(255,27,0,0.4)"
+            : "0 0 8px rgba(255,27,0,0.6)",
+          transition: "all 0.2s ease",
         }}
       />
+      {/* Subtle trail */}
       <div
-        ref={outlineRef}
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border-2 border-[#ff1b00]/50 pointer-events-none z-[9998] mix-blend-difference"
+        ref={trailRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
         style={{
-          transition: "width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease",
-          width: isHovering ? "50px" : isClicking ? "35px" : "40px",
-          height: isHovering ? "50px" : isClicking ? "35px" : "40px",
-          borderColor: isHovering ? "#ff1b00" : "rgba(255,27,0,0.5)",
-          backgroundColor: isHovering ? "rgba(255,27,0,0.1)" : "transparent",
+          width: "2px",
+          height: "2px",
+          borderRadius: "50%",
+          background: "rgba(255,27,0,0.4)",
+          boxShadow: "0 0 4px rgba(255,27,0,0.3)",
         }}
       />
     </>
