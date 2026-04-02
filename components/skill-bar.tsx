@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { skillsData } from "@/data";
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const SkillBar = ({ name, percentage, color, index }: { name: string; percentage: number; color: string; index: number }) => {
   const [width, setWidth] = useState(0);
-  const barRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -17,41 +17,29 @@ const SkillBar = ({ name, percentage, color, index }: { name: string; percentage
       },
       { threshold: 0.3 }
     );
-
-    if (barRef.current) observer.observe(barRef.current);
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [percentage, index]);
 
   return (
     <motion.div
-      ref={barRef}
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className="group p-4 md:p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-all duration-300"
+      ref={ref}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      className="p-4 bg-gray-900/40 rounded-lg border border-gray-800"
     >
-      <div className="flex justify-between items-center mb-3">
-        <span className="font-semibold text-white/90 group-hover:text-white transition-colors">{name}</span>
-        <span className="text-sm font-bold" style={{ color }}>{width}%</span>
+      <div className="flex justify-between mb-2">
+        <span className="text-white font-medium">{name}</span>
+        <span className="text-gray-400">{width}%</span>
       </div>
-      <div className="h-2.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-1000 ease-out relative"
+          className="h-full rounded-full transition-all duration-1000"
           style={{
             width: `${width}%`,
-            background: `linear-gradient(90deg, ${color}, ${color}aa)`,
-            boxShadow: `0 0 15px ${color}40`,
+            background: color,
           }}
-        >
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-              animation: "shimmer 2s infinite",
-            }}
-          />
-        </div>
+        />
       </div>
     </motion.div>
   );
