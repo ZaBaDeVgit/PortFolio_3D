@@ -3,7 +3,6 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Dock from "@/components/dock";
-import CustomCursor from "@/components/custom-cursor";
 import Scene3D from "@/components/scene-3d";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -26,7 +25,6 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased bg-[#0a0a0a] text-white overflow-x-hidden">
         <Scene3D />
-        <CustomCursor />
         <Header />
         <main className="relative z-10">{children}</main>
         <Dock />
