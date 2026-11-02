@@ -1,70 +1,70 @@
-"use client";
+import Link from 'next/link';
+import { ArrowDown, ArrowUpRight, Github, Linkedin } from 'lucide-react';
+import HeroArt from './hero-art';
+import { profile } from '@/data';
 
-import { TypeAnimation } from "react-type-animation";
-import Link from "next/link";
-
-const HeroSection = () => {
+export default function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-20 pt-28">
-      <div className="max-w-4xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center">
-        <div className="text-center md:text-left">
-          <p className="text-sm uppercase tracking-widest text-red-600 mb-4 font-semibold">
-            Full Stack Developer & Formador
-          </p>
-
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-white">Si puedes</span>
-            <br />
-            <span className="text-white">ImaginarlO,</span>
-          </h1>
-          
-          <p className="text-xl text-red-600 font-bold mb-6">
-            <TypeAnimation
-              sequence={[
-                "puedes programarlO",
-                2000,
-                "puedes desarrollarlO",
-                2000,
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-            />
-          </p>
-
-          <p className="text-gray-400 mb-6">
-            Soy Formador Online y Desarrollador Full Stack, apasionado por
-            combinar diseño y desarrollo para crear experiencias digitales.
-          </p>
-
-          <div className="flex gap-4 justify-center md:justify-start">
-            <Link
-              href="/portfolio/"
-              className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded"
-            >
-              Ver proyectos
-            </Link>
-            <Link
-              href="/contact/"
-              className="px-6 py-2 border border-gray-600 hover:border-red-500 text-white font-semibold rounded"
-            >
-              Contactar
-            </Link>
-          </div>
+    <section className="hero container" aria-labelledby="hero-heading">
+      <div className="hero-content">
+        <div className="availability">
+          <span className="live-dot" /> Abierto a nuevas oportunidades
         </div>
-
-        <div className="flex justify-center">
-          <div className="w-48 h-48 md:w-64 md:h-64">
-            <img
-              src="/PortFolio_3D/home-4.png"
-              alt="ZaBaDeV"
-              className="w-full h-full object-contain"
-            />
-          </div>
+        <p className="eyebrow hero-eyebrow">
+          DESARROLLADOR FULL STACK & FORMADOR
+        </p>
+        <h1 id="hero-heading">
+          Del código a lo
+          <br />
+          <span className="hero-highlight">
+            extraordinario
+            <span className="heading-asterisk" aria-hidden="true">
+              ✳
+            </span>
+          </span>
+          <span className="accent">.</span>
+        </h1>
+        <p className="hero-description">
+          Soy <strong>Juan José</strong>, aunque por aquí me conocen como{' '}
+          <strong>ZaBaDeV</strong>. Transformo ideas en experiencias digitales
+          que conectan, sorprenden y funcionan.
+        </p>
+        <div className="hero-actions">
+          <Link className="button button-primary" href="/portfolio/">
+            Explorar proyectos <ArrowUpRight size={18} />
+          </Link>
+          <Link className="button button-text" href="/about-me/">
+            Un poco sobre mí <ArrowUpRight size={17} />
+          </Link>
         </div>
+        <div className="hero-socials">
+          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+            <Github size={17} /> GitHub <ArrowUpRight size={12} />
+          </a>
+          <span className="social-divider" />
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+            <Linkedin size={17} /> LinkedIn <ArrowUpRight size={12} />
+          </a>
+          <span className="hero-location">
+            <span /> España · Conectado al mundo
+          </span>
+        </div>
+      </div>
+      <HeroArt />
+      <a href="#selected-work" className="scroll-cue">
+        <span className="scroll-icon">
+          <ArrowDown size={15} />
+        </span>{' '}
+        Sigue explorando <span className="scroll-line" />
+      </a>
+      <div className="hero-note">
+        <span className="mono">01 / 04</span>
+        <span>
+          No es solo código.
+          <br />
+          Es lo que puedes hacer con él.
+        </span>
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

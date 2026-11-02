@@ -1,63 +1,70 @@
-"use client";
+import { ArrowUpRight, Github } from 'lucide-react';
+import { type Project } from '@/data';
+import { assetPath } from '@/lib/utils';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
-
-interface PortfolioCardProps {
-  data: {
-    id: number;
-    title: string;
-    image: string;
-    urlGithub: string;
-    urlDemo: string;
-  };
-  index: number;
-}
-
-const PortfolioCard = ({ data, index }: PortfolioCardProps) => {
-  const { title, image, urlGithub, urlDemo } = data;
-
+export default function PortfolioCard({
+  data,
+  index = 0,
+}: {
+  data: Project;
+  index?: number;
+}) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-gray-900/40 rounded-lg overflow-hidden border border-gray-800 hover:border-red-500/50 transition-colors"
-    >
-      <div className="aspect-video bg-gray-800">
-        <img
-          src={image.startsWith('/') ? `/PortFolio_3D${image}` : image}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="font-semibold text-white mb-3">{title}</h3>
-        <div className="flex gap-3">
-          {urlGithub !== "#!" && (
-            <Link
-              href={urlGithub}
-              target="_blank"
-              className="flex items-center gap-1 text-sm text-gray-400 hover:text-white"
-            >
-              <Github size={16} /> GitHub
-            </Link>
-          )}
-          {urlDemo !== "#!" && (
-            <Link
-              href={urlDemo}
-              target="_blank"
-              className="flex items-center gap-1 text-sm text-red-500 hover:text-red-400"
-            >
-              <ExternalLink size={16} /> Demo
-            </Link>
-          )}
+    <article className={`project-card project-${data.accent}`}>
+      <a
+        href={data.urlDemo}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="project-visual"
+        aria-label={`Abrir demo de ${data.title} (nueva pestaña)`}
+      >
+        <div className="project-topline">
+          <span>{data.category}</span>
+          <span className="project-number">0{index + 1}</span>
+        </div>
+        <div className="project-image-window">
+          <div className="window-bar">
+            <i />
+            <i />
+            <i />
+            <span>{data.title.toLowerCase().replaceAll(' ', '-')}.app</span>
+          </div>
+          <img
+            src={assetPath(data.image)}
+            width={800}
+            height={500}
+            loading="lazy"
+            alt={`Captura de la interfaz de ${data.title}`}
+          />
+        </div>
+        <span className="project-open">
+          <ArrowUpRight size={20} />
+        </span>
+      </a>
+      <div className="project-info">
+        <div className="project-title-row">
+          <h3>
+            <a href={data.urlDemo} target="_blank" rel="noopener noreferrer">
+              {data.title} <ArrowUpRight size={20} />
+            </a>
+          </h3>
+          <a
+            href={data.urlGithub}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-source"
+            aria-label={`Código fuente de ${data.title} en GitHub (nueva pestaña)`}
+          >
+            <Github size={18} />
+          </a>
+        </div>
+        <p>{data.description}</p>
+        <div className="tags">
+          {data.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </div>
       </div>
-    </motion.div>
+    </article>
   );
-};
-
-export default PortfolioCard;
+}
