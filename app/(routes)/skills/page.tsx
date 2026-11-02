@@ -1,24 +1,68 @@
-import { skillsData } from "@/data";
-import SkillBar from "@/components/skill-bar";
-
+import type { Metadata } from 'next';
+import { ArrowUpRight, Braces, Database, Layers3 } from 'lucide-react';
+import Link from 'next/link';
+import { skillGroups } from '@/data';
+import ContactBanner from '@/components/contact-banner';
+export const metadata: Metadata = {
+  title: 'Stack & habilidades',
+  description:
+    'Las herramientas de ZaBaDeV: desarrollo frontend, backend, aplicaciones multiplataforma y formación online.',
+};
+const icons = [Braces, Database, Layers3];
 export default function SkillsPage() {
   return (
-    <div className="pt-24 px-6 pb-20">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Mis <span className="text-red-600">Skills</span>
-      </h1>
-
-      <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-        {skillsData.map((skill, index) => (
-          <SkillBar
-            key={skill.name}
-            name={skill.name}
-            percentage={skill.percentage}
-            color={skill.color}
-            index={index}
-          />
-        ))}
-      </div>
-    </div>
+    <>
+      <section className="container page-section">
+        <div className="page-intro">
+          <p className="eyebrow">
+            <span className="accent">03 /</span> MI CAJA DE HERRAMIENTAS
+          </p>
+          <h1>
+            La idea primero.
+            <br />
+            <span className="muted-heading">La tecnología, después.</span>
+          </h1>
+          <p>
+            No se trata de coleccionar lenguajes. Se trata de elegir las
+            herramientas adecuadas para convertir cada reto en una solución.
+          </p>
+        </div>
+        <div className="skill-groups">
+          {skillGroups.map((group, index) => {
+            const Icon = icons[index];
+            return (
+              <article className="skill-group" key={group.number}>
+                <div className="skill-group-icon">
+                  <Icon size={28} />
+                  <span className="mono">{group.number}</span>
+                </div>
+                <h2>{group.title}</h2>
+                <p>{group.description}</p>
+                <div className="skill-chips">
+                  {group.skills.map((skill) => (
+                    <span key={skill}>{skill}</span>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div className="stack-note">
+          <span className="little-star">✳</span>
+          <div>
+            <h2>Siempre en modo aprendizaje.</h2>
+            <p>
+              Este portfolio también es un laboratorio: Next.js, TypeScript y
+              una escena 3D con Three.js. Sin porcentajes arbitrarios. El código
+              es la mejor forma de mostrar lo que hago.
+            </p>
+          </div>
+          <Link className="text-link" href="/portfolio/">
+            Verlo en acción <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
+      <ContactBanner />
+    </>
   );
 }

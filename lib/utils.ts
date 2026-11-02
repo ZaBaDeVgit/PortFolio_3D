@@ -1,5 +1,4 @@
-// Helper to prefix paths for GitHub Pages deployment
 export function assetPath(path: string): string {
-  if (!path.startsWith('/')) return path;
-  return `/PortFolio_3D${path}`;
+  if (!path.startsWith('/') || path.startsWith('//')) return path;
+  return `${process.env.NEXT_PUBLIC_BASE_PATH || ''}${path}`;
 }

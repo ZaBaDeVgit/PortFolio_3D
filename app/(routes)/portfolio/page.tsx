@@ -1,18 +1,30 @@
-import { dataPortfolio } from "@/data";
-import PortfolioCard from "@/components/portfolio-card";
-
+import type { Metadata } from 'next';
+import ProjectGallery from '@/components/project-gallery';
+import ContactBanner from '@/components/contact-banner';
+export const metadata: Metadata = {
+  title: 'Proyectos',
+  description:
+    'Una selección de proyectos de ZaBaDeV: aplicaciones web, juegos interactivos y experimentos de desarrollo.',
+};
 export default function PortfolioPage() {
   return (
-    <div className="pt-24 px-6 pb-20">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Mis <span className="text-red-600">Proyectos</span>
-      </h1>
-
-      <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {dataPortfolio.map((project, index) => (
-          <PortfolioCard key={project.id} data={project} index={index} />
-        ))}
-      </div>
-    </div>
+    <>
+      <section className="container page-section">
+        <div className="page-intro">
+          <p className="eyebrow">
+            <span className="accent">01 /</span> IDEAS QUE COBRAN VIDA
+          </p>
+          <h1>
+            Código en acción<span className="accent">.</span>
+          </h1>
+          <p>
+            Cada proyecto es una oportunidad de aprender, resolver algo nuevo y
+            llevar una idea un poco más lejos. Aquí tienes una selección.
+          </p>
+        </div>
+        <ProjectGallery />
+      </section>
+      <ContactBanner />
+    </>
   );
 }
